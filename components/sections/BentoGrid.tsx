@@ -1,6 +1,15 @@
+'use client'
+
+import { useState } from 'react'
 import FadeUp from '@/components/animations/FadeUp'
 import BentoCard from '@/components/ui/BentoCard'
 import ShowcaseCarousel from '@/components/sections/ShowcaseCarousel'
+import ProductGalleryModal, { GalleryData } from '@/components/ui/ProductGalleryModal'
+
+const gallery = (folder: string) =>
+  Array.from({ length: 10 }, (_, i) =>
+    `/images/${folder}/${String(i + 1).padStart(2, '0')}.svg`
+  )
 
 const PRODUCTS = [
   {
@@ -13,6 +22,7 @@ const PRODUCTS = [
     delay: 0.1,
     fabricBadges: ['Transpirabilidad 95%', 'Secado Rápido', 'Anti UV', 'Sublimación Total'],
     imageSrc: '/images/showcase/img1.jpg',
+    gallery: gallery('showcase/futbol'),
   },
   {
     label: 'Escuelas de Formación',
@@ -24,6 +34,7 @@ const PRODUCTS = [
     delay: 0.2,
     fabricBadges: ['Extra Durabilidad', 'Lavado Industrial', 'Anti Desgarro'],
     imageSrc: '/images/showcase/img2.jpg',
+    gallery: gallery('showcase/escuelas'),
   },
   {
     label: 'Dotación',
@@ -35,10 +46,13 @@ const PRODUCTS = [
     delay: 0.3,
     fabricBadges: ['Resistencia Industrial', 'Anti Manchas', 'Lavado 60°'],
     imageSrc: '/images/showcase/img4.jpg',
+    gallery: gallery('showcase/dotacion'),
   },
 ]
 
 export default function BentoGrid() {
+  const [active, setActive] = useState<GalleryData | null>(null)
+
   return (
     <section id="productos" className="bg-bg-primary py-28 px-8 lg:px-16">
       <div className="max-w-[1400px] mx-auto">
@@ -79,6 +93,12 @@ export default function BentoGrid() {
                 fabricBadges={product.fabricBadges}
                 imageSrc={(product as { imageSrc?: string }).imageSrc}
                 className="flex-1"
+                onClick={() => setActive({
+                  title: product.label,
+                  tag: product.tag,
+                  accentColor: product.accentColor,
+                  images: product.gallery,
+                })}
               />
             </FadeUp>
           ))}
@@ -114,7 +134,7 @@ export default function BentoGrid() {
               </div>
 
               <a
-                href="#contacto"
+                href="#cotizar"
                 className="relative z-10 shrink-0 inline-flex items-center gap-2 border border-accent text-accent
                   px-7 py-3 font-body font-medium uppercase tracking-wider text-xs
                   hover:bg-accent hover:text-white clip-button transition-all duration-300"
@@ -130,6 +150,9 @@ export default function BentoGrid() {
         <ShowcaseCarousel />
 
       </div>
+
+      {/* ── Product Gallery Modal ───────────────────────────────────── */}
+      <ProductGalleryModal data={active} onClose={() => setActive(null)} />
     </section>
   )
 }

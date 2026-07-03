@@ -4,6 +4,12 @@ import Image from 'next/image'
 import { useReducedMotion } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
 import FadeUp from '@/components/animations/FadeUp'
+import ProductGalleryModal, { GalleryData } from '@/components/ui/ProductGalleryModal'
+
+const gallery = (folder: string) =>
+  Array.from({ length: 10 }, (_, i) =>
+    `/images/${folder}/${String(i + 1).padStart(2, '0')}.svg`
+  )
 
 interface ShowcaseItem {
   title: string
@@ -12,6 +18,7 @@ interface ShowcaseItem {
   accent: string
   bg: string
   imageSrc: string
+  gallery: string[]
 }
 
 const ITEMS: ShowcaseItem[] = [
@@ -22,6 +29,7 @@ const ITEMS: ShowcaseItem[] = [
     accent:   '#CC0000',
     bg:       'radial-gradient(ellipse 80% 65% at 25% 20%, #4D0000 0%, #0a0a0a 72%)',
     imageSrc: '/images/showcase/img1.jpg',
+    gallery:  gallery('clientes/clubes-fpc'),
   },
   {
     title:    'Selección Bogotá',
@@ -30,6 +38,7 @@ const ITEMS: ShowcaseItem[] = [
     accent:   '#4DFFB4',
     bg:       'radial-gradient(ellipse 80% 65% at 75% 25%, #003320 0%, #0a0a0a 72%)',
     imageSrc: '/images/showcase/img2.jpg',
+    gallery:  gallery('clientes/seleccion-bogota'),
   },
   {
     title:    'Dotación Corporativa',
@@ -38,6 +47,7 @@ const ITEMS: ShowcaseItem[] = [
     accent:   '#C084FC',
     bg:       'radial-gradient(ellipse 80% 65% at 30% 25%, #1A0D33 0%, #0a0a0a 72%)',
     imageSrc: '/images/showcase/img4.jpg',
+    gallery:  gallery('clientes/dotacion-corp'),
   },
   {
     title:    'Liga de Fútbol Sala',
@@ -46,6 +56,7 @@ const ITEMS: ShowcaseItem[] = [
     accent:   '#FB923C',
     bg:       'radial-gradient(ellipse 80% 65% at 70% 20%, #33120D 0%, #0a0a0a 72%)',
     imageSrc: '/images/showcase/img5.jpg',
+    gallery:  gallery('clientes/futbol-sala'),
   },
 ]
 
@@ -55,7 +66,7 @@ const STRIDE  = CARD_W + GAP
 const TOTAL_W = ITEMS.length * STRIDE
 
 /* ─── Card ────────────────────────────────────────────────────────── */
-function ShowcaseCard({ item }: { item: ShowcaseItem }) {
+function ShowcaseCard({ item, onOpenGallery }: { item: ShowcaseItem; onOpenGallery: () => void }) {
   const [hovered, setHovered] = useState(false)
 
   return (
@@ -63,6 +74,7 @@ function ShowcaseCard({ item }: { item: ShowcaseItem }) {
       className="relative flex-shrink-0 overflow-hidden"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={onOpenGallery}
       style={{
         width:        CARD_W,
         height:       440,
@@ -71,7 +83,7 @@ function ShowcaseCard({ item }: { item: ShowcaseItem }) {
         border:       `1px solid ${hovered ? item.accent + '55' : 'var(--border)'}`,
         transform:    hovered ? 'translateY(-10px) scale(1.02)' : 'translateY(0) scale(1)',
         transition:   'transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.3s',
-        cursor:       'default',
+        cursor:       'pointer',
       }}
     >
       {/* Background gradient */}
@@ -167,14 +179,22 @@ function ShowcaseCard({ item }: { item: ShowcaseItem }) {
           {item.sub}
         </p>
 
-        {/* Accent gradient underline */}
+        {/* Ver galería CTA — appears on hover */}
         <div
-          className="mt-4 h-px transition-all duration-500"
-          style={{
-            background: `linear-gradient(to right, ${item.accent}90, transparent)`,
-            width: hovered ? '100%' : '70%',
-          }}
-        />
+          className="flex items-center justify-between mt-4 transition-all duration-400"
+          style={{ opacity: hovered ? 1 : 0, transform: hovered ? 'translateY(0)' : 'translateY(6px)' }}
+        >
+          <div
+            className="h-px flex-1"
+            style={{ background: `linear-gradient(to right, ${item.accent}90, transparent)` }}
+          />
+          <span
+            className="ml-3 font-body uppercase shrink-0"
+            style={{ fontSize: '0.58rem', letterSpacing: '0.15em', color: item.accent }}
+          >
+            Ver galería →
+          </span>
+        </div>
       </div>
     </article>
   )
@@ -184,11 +204,11 @@ function ShowcaseCard({ item }: { item: ShowcaseItem }) {
 export default function ShowcaseCarousel() {
   const prefersReduced = useReducedMotion()
   const [isPaused, setIsPaused] = useState(false)
+  const [activeItem, setActiveItem] = useState<GalleryData | null>(null)
   const trackRef = useRef<HTMLDivElement>(null)
 
   const doubled = [...ITEMS, ...ITEMS]
 
-  /* CSS animation approach — pause state is preserved without position reset */
   useEffect(() => {
     const el = trackRef.current
     if (!el) return
@@ -234,7 +254,16 @@ export default function ShowcaseCarousel() {
           }}
         >
           {doubled.map((item, i) => (
-            <ShowcaseCard key={i} item={item} />
+            <ShowcaseCard
+              key={i}
+              item={item}
+              onOpenGallery={() => setActiveItem({
+                title:       item.title,
+                tag:         item.category,
+                accentColor: item.accent,
+                images:      item.gallery,
+              })}
+            />
           ))}
         </div>
 
@@ -263,10 +292,13 @@ export default function ShowcaseCarousel() {
               padding: '3px 10px',
             }}
           >
-            Pausado
+            Click para abrir galería
           </div>
         )}
       </div>
+
+      {/* ── Client Gallery Modal ──────────────────────────────────── */}
+      <ProductGalleryModal data={activeItem} onClose={() => setActiveItem(null)} />
     </div>
   )
 }

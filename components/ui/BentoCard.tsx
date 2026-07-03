@@ -12,6 +12,7 @@ interface BentoCardProps {
   className?: string
   fabricBadges?: string[]
   imageSrc?: string
+  onClick?: () => void
 }
 
 export default function BentoCard({
@@ -23,6 +24,7 @@ export default function BentoCard({
   className = '',
   fabricBadges,
   imageSrc,
+  onClick,
 }: BentoCardProps) {
   const [hovered, setHovered] = useState(false)
 
@@ -30,6 +32,7 @@ export default function BentoCard({
     <article
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={onClick}
       className={`
         relative overflow-hidden cursor-pointer
         bg-bg-surface border border-border
@@ -151,8 +154,8 @@ export default function BentoCard({
         )}
 
         {/* ── Explorar Colección button ─────────────────────────────── */}
-        <a
-          href="#cotizar"
+        <button
+          onClick={onClick}
           className="inline-flex items-center gap-2 mt-4 font-body font-semibold
             uppercase border border-accent text-accent clip-button
             hover:bg-accent hover:text-white transition-all duration-300"
@@ -166,8 +169,8 @@ export default function BentoCard({
             pointerEvents: hovered ? 'auto' : 'none',
           }}
         >
-          Explorar Colección →
-        </a>
+          Ver Galería →
+        </button>
       </div>
     </article>
   )
