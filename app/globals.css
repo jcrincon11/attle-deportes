@@ -268,7 +268,7 @@ p {
 /* ─── Carousel scroll animation ──────────────────────────────────── */
 @keyframes carouselScroll {
   from { transform: translateX(0); }
-  to   { transform: translateX(calc(-1 * 1650px)); }
+  to   { transform: translateX(calc(-1 * 1320px)); }
 }
 
 /* ─── Diagonal performance lines ─────────────────────────────────── */

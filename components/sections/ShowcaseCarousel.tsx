@@ -21,7 +21,7 @@ const ITEMS: ShowcaseItem[] = [
     category: 'Fútbol',
     accent:   '#CC0000',
     bg:       'radial-gradient(ellipse 80% 65% at 25% 20%, #4D0000 0%, #0a0a0a 72%)',
-    imageSrc: '/images/showcase/img1.svg',
+    imageSrc: '/images/showcase/img1.jpg',
   },
   {
     title:    'Selección Bogotá',
@@ -29,15 +29,7 @@ const ITEMS: ShowcaseItem[] = [
     category: 'Fútbol',
     accent:   '#4DFFB4',
     bg:       'radial-gradient(ellipse 80% 65% at 75% 25%, #003320 0%, #0a0a0a 72%)',
-    imageSrc: '/images/showcase/img2.svg',
-  },
-  {
-    title:    'Ciclismo de Ruta',
-    sub:      'Competición · Pro Series',
-    category: 'Ciclismo',
-    accent:   '#FFD000',
-    bg:       'radial-gradient(ellipse 80% 65% at 40% 20%, #332B00 0%, #0a0a0a 72%)',
-    imageSrc: '/images/showcase/img3.svg',
+    imageSrc: '/images/showcase/img2.jpg',
   },
   {
     title:    'Dotación Corporativa',
@@ -45,7 +37,7 @@ const ITEMS: ShowcaseItem[] = [
     category: 'Dotación',
     accent:   '#C084FC',
     bg:       'radial-gradient(ellipse 80% 65% at 30% 25%, #1A0D33 0%, #0a0a0a 72%)',
-    imageSrc: '/images/showcase/img4.svg',
+    imageSrc: '/images/showcase/img4.jpg',
   },
   {
     title:    'Liga de Fútbol Sala',
@@ -53,7 +45,7 @@ const ITEMS: ShowcaseItem[] = [
     category: 'Fútbol Sala',
     accent:   '#FB923C',
     bg:       'radial-gradient(ellipse 80% 65% at 70% 20%, #33120D 0%, #0a0a0a 72%)',
-    imageSrc: '/images/showcase/img5.svg',
+    imageSrc: '/images/showcase/img5.jpg',
   },
 ]
 

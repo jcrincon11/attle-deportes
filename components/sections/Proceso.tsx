@@ -128,7 +128,7 @@ export default function Proceso() {
             del volumen. Mínimo de pedido: <span className="text-text-primary">10 unidades</span>.
           </p>
           <a
-            href="https://wa.me/57XXXXXXXXXX"
+            href="https://wa.me/573178888966"
             target="_blank"
             rel="noopener noreferrer"
             className="shrink-0 inline-flex items-center gap-3 px-7 py-3 bg-bg-surface border border-border

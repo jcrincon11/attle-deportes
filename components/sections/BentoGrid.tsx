@@ -12,7 +12,7 @@ const PRODUCTS = [
     gridClass: 'row-span-2 min-h-[560px]',
     delay: 0.1,
     fabricBadges: ['Transpirabilidad 95%', 'Secado Rápido', 'Anti UV', 'Sublimación Total'],
-    imageSrc: '/images/showcase/img1.svg',
+    imageSrc: '/images/showcase/img1.jpg',
   },
   {
     label: 'Escuelas de Formación',
@@ -23,7 +23,7 @@ const PRODUCTS = [
     gridClass: 'min-h-[268px]',
     delay: 0.2,
     fabricBadges: ['Extra Durabilidad', 'Lavado Industrial', 'Anti Desgarro'],
-    imageSrc: '/images/showcase/img2.svg',
+    imageSrc: '/images/showcase/img2.jpg',
   },
   {
     label: 'Dotación',
@@ -34,7 +34,7 @@ const PRODUCTS = [
     gridClass: 'min-h-[268px]',
     delay: 0.3,
     fabricBadges: ['Resistencia Industrial', 'Anti Manchas', 'Lavado 60°'],
-    imageSrc: '/images/showcase/img4.svg',
+    imageSrc: '/images/showcase/img4.jpg',
   },
 ]
 
