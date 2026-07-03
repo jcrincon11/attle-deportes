@@ -1,0 +1,327 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design Tokens ──────────────────────────────────────────────── */
+:root {
+  /* Ferrari Red / Rojo Corsa */
+  --accent:         #CC0000;
+  --accent-hover:   #E00000;
+  --accent-glow:    rgba(204, 0, 0, 0.12);
+  --accent-gold:    #FFD000;
+  --accent-teal:    #4DFFB4;
+
+  --bg-primary:     #0a0a0a;
+  --bg-surface:     #111111;
+  --bg-surface-2:   #1A1A1A;
+  --bg-surface-3:   #222222;
+
+  --text-primary:   #ffffff;
+  --text-muted:     #888888;
+  --text-subtle:    #444444;
+
+  --border:         #1E1E1E;
+  --border-hover:   #333333;
+
+  --side-margin:    5vw;
+  --section-py:     clamp(5rem, 10vw, 8rem);
+}
+
+/* ─── CSS Reset ──────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-size: 16px;
+}
+
+body {
+  overflow-x: hidden;
+  min-height: 100dvh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-dm), 'DM Sans', system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+video,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  background: none;
+  border: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* Headings default to Oswald — bold, condensed, athletic */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-oswald), 'Oswald', 'Impact', sans-serif;
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+p {
+  line-height: 1.7;
+}
+
+/* ─── Selection ──────────────────────────────────────────────────── */
+::selection {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-surface-3);
+  border-radius: 2px;
+}
+
+/* ─── Typography utilities ───────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-oswald), 'Oswald', 'Impact', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.font-body {
+  font-family: var(--font-dm), 'DM Sans', sans-serif;
+}
+
+.font-bebas {
+  font-family: var(--font-bebas), 'Bebas Neue', 'Impact', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Section ambient backgrounds ────────────────────────────────── */
+#hero {
+  background-image:
+    radial-gradient(ellipse 65% 55% at 70% 42%, rgba(204, 0, 0, 0.09) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 45% at 5%  88%, rgba(204, 0, 0, 0.05) 0%, transparent 55%);
+}
+
+#productos {
+  background-image:
+    linear-gradient(180deg,
+      var(--bg-primary)  0%,
+      var(--bg-surface)  35%,
+      var(--bg-surface)  65%,
+      var(--bg-primary)  100%
+    );
+}
+
+#proceso {
+  background-color: var(--bg-primary);
+}
+
+#cotizar {
+  background-image:
+    radial-gradient(ellipse 80% 55% at 50% 100%, rgba(204, 0, 0, 0.07) 0%, transparent 60%);
+}
+
+#contacto {
+  background-color: var(--bg-surface);
+}
+
+/* ─── Clip-path CTA button ───────────────────────────────────────── */
+.clip-button {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+}
+
+/* ─── Bento card glow variables ──────────────────────────────────── */
+.bento-glow-orange { --glow-color: rgba(204, 0, 0, 0.14); }
+.bento-glow-teal   { --glow-color: rgba(77, 255, 180, 0.10); }
+.bento-glow-gold   { --glow-color: rgba(255, 208, 0, 0.10); }
+
+/* ─── Diagonal section cuts (~5°) ───────────────────────────────── */
+.section-cut {
+  clip-path: polygon(0 8.75vw, 100% 0, 100% calc(100% - 8.75vw), 0 100%);
+}
+
+.section-cut-top {
+  clip-path: polygon(0 8.75vw, 100% 0, 100% 100%, 0 100%);
+}
+
+.section-cut-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8.75vw), 0 100%);
+}
+
+/* ─── Quote Wizard — text inputs ─────────────────────────────────── */
+.quote-input {
+  display: block;
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-family: var(--font-dm), 'DM Sans', sans-serif;
+  font-size: 0.875rem;
+  border-radius: 0;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.quote-input:focus {
+  border-color: var(--accent);
+}
+
+.quote-input::placeholder {
+  color: var(--text-subtle);
+}
+
+/* ─── Quote Wizard — range slider ────────────────────────────────── */
+.quote-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2px;
+  outline: none;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.quote-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border: 2px solid var(--bg-primary);
+  border-radius: 0;
+  cursor: pointer;
+  margin-top: -7px;
+}
+
+.quote-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border: 2px solid var(--bg-primary);
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.quote-slider::-moz-range-progress {
+  background: var(--accent);
+  height: 2px;
+}
+
+.quote-slider::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 0;
+}
+
+/* ─── Add to Cart — Sci-Fi glass panel ──────────────────────────── */
+.add-to-cart {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(204, 0, 0, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.add-to-cart:hover {
+  border-color: rgba(204, 0, 0, 0.8);
+  box-shadow:
+    0 0 25px rgba(204, 0, 0, 0.4),
+    inset 0 0 10px rgba(204, 0, 0, 0.2);
+}
+
+/* ─── Carousel scroll animation ──────────────────────────────────── */
+@keyframes carouselScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-1 * 1650px)); }
+}
+
+/* ─── Diagonal performance lines ─────────────────────────────────── */
+/*
+  z-index: 20 → sobre las secciones, bajo el Navbar (z-50).
+  pointer-events: none → sin interferencia con clics ni hover.
+  Línea roja: Rojo Corsa (#CC0000) — energía de marca.
+  Línea blanca: contraste estructural, balance visual.
+*/
+.page-diagonals {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.page-diagonals::before {
+  content: '';
+  position: absolute;
+  top: 26%;
+  left: -60%;
+  width: 220%;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    transparent    0%,
+    rgba(204, 0, 0, 0.28) 15%,
+    rgba(204, 0, 0, 0.48) 45%,
+    rgba(204, 0, 0, 0.48) 55%,
+    rgba(204, 0, 0, 0.28) 85%,
+    transparent   100%
+  );
+  transform: rotate(-10deg);
+  transform-origin: center;
+}
+
+.page-diagonals::after {
+  content: '';
+  position: absolute;
+  top: 71%;
+  left: -60%;
+  width: 220%;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent              0%,
+    rgba(255, 255, 255, 0.14) 20%,
+    rgba(255, 255, 255, 0.24) 45%,
+    rgba(255, 255, 255, 0.24) 55%,
+    rgba(255, 255, 255, 0.14) 80%,
+    transparent             100%
+  );
+  transform: rotate(-10deg);
+  transform-origin: center;
+}

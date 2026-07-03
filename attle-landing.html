@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attle Deportes SAS | De Fontibón a la Élite del FPC</title>
+  <meta name="description" content="Indumentaria deportiva de alto rendimiento fabricada en Colombia. FPC, fuerzas básicas y dotación de élite.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:    #080808;
+      --deep:   #101010;
+      --card:   #141414;
+      --border: rgba(255,255,255,0.07);
+      --white:  #F3F3EF;
+      --muted:  #636363;
+      --fire:   #FF3D00;
+      --fire-bg: rgba(255,61,0,0.06);
+      --ease:   cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--ink); color: var(--white);
+      overflow-x: hidden; -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ───────────────────────────────────────────── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.75rem clamp(1.5rem,5vw,4.5rem);
+      transition: padding .4s var(--ease), background .4s var(--ease), border-color .4s var(--ease);
+      border-bottom: 1px solid transparent;
+    }
+    .nav--scrolled {
+      padding-top: 1rem; padding-bottom: 1rem;
+      background: rgba(8,8,8,.92); backdrop-filter: blur(16px);
+      border-color: var(--border);
+    }
+    .nav__logo {
+      font-family: 'Oswald', sans-serif; font-size: clamp(1rem,1.8vw,1.3rem);
+      font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+      text-decoration: none; color: var(--white);
+    }
+    .nav__logo em { font-style: normal; color: var(--fire); }
+    .nav__links { display: flex; gap: clamp(1.5rem,3vw,2.5rem); list-style: none; }
+    .nav__links a {
+      font-size: .72rem; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color .25s;
+    }
+    .nav__links a:hover { color: var(--white); }
+    .nav__cta {
+      font-family: 'Oswald', sans-serif; font-size: .72rem; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: .6rem 1.4rem; border: 1px solid var(--fire);
+      color: var(--fire); text-decoration: none; transition: background .3s, color .3s;
+    }
+    .nav__cta:hover { background: var(--fire); color: var(--white); }
+
+    /* ── HERO ──────────────────────────────────────────── */
+    .hero {
+      position: relative; height: 100svh; min-height: 640px;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 clamp(1.5rem,5vw,4.5rem) clamp(3rem,6vw,5rem);
+      overflow: hidden;
+    }
+    .hero__bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 60% at 72% 42%, rgba(255,61,0,.06) 0%, transparent 68%),
+        radial-gradient(ellipse 35% 40% at 15% 78%, rgba(255,61,0,.025) 0%, transparent 60%);
+      transition: background .1s;
+    }
+    .hero__bg::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+    }
+
+    .hero__eyebrow {
+      display: flex; align-items: center; gap: .75rem;
+      margin-bottom: clamp(1.5rem,3vw,2.5rem);
+      opacity: 0; transform: translateY(16px);
+      animation: up .7s var(--ease) .2s forwards;
+    }
+    .hero__eyebrow-dash { width: 32px; height: 2px; background: var(--fire); }
+    .hero__eyebrow-text {
+      font-size: .68rem; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--fire); font-weight: 500;
+    }
+    .hero__h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(3.8rem,11vw,12rem);
+      font-weight: 700; text-transform: uppercase;
+      line-height: .88; letter-spacing: -.02em;
+      opacity: 0; transform: translateY(28px);
+      animation: up .9s var(--ease) .4s forwards;
+    }
+    .hero__h1 .fire { color: var(--fire); }
+
+    .hero__foot {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      flex-wrap: wrap; gap: 2rem; margin-top: clamp(2.5rem,5vw,4.5rem);
+      opacity: 0; transform: translateY(16px);
+      animation: up .7s var(--ease) .75s forwards;
+    }
+    .hero__desc {
+      font-size: clamp(.92rem,1.4vw,1.05rem);
+      color: var(--muted); line-height: 1.85; font-weight: 300; max-width: 420px;
+    }
+    .hero__actions { display: flex; align-items: center; gap: 1.5rem; }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .65rem;
+      font-family: 'Oswald', sans-serif; font-size: .82rem;
+      font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+      text-decoration: none; white-space: nowrap; transition: .3s var(--ease);
+    }
+    .btn svg { transition: transform .3s; }
+    .btn--primary { background: var(--fire); color: var(--white); padding: 1rem 2.25rem; }
+    .btn--primary:hover { background: var(--white); color: var(--ink); transform: translateY(-2px); }
+    .btn--primary:hover svg { transform: translateX(4px); }
+    .btn--ghost { color: var(--muted); }
+    .btn--ghost:hover { color: var(--white); }
+    .btn--dark { background: var(--ink); color: var(--white); padding: 1.2rem 2.75rem; }
+    .btn--dark:hover { background: var(--white); color: var(--ink); transform: translateY(-2px); }
+    .btn--dark:hover svg { transform: translateX(4px); }
+
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; right: clamp(1.5rem,5vw,4.5rem);
+      display: flex; flex-direction: column; align-items: center; gap: .75rem;
+      opacity: 0; animation: fadeIn 1s ease 1.2s forwards;
+    }
+    .scroll-hint span {
+      font-size: .6rem; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--muted); writing-mode: vertical-lr;
+    }
+    .scroll-hint-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--fire), transparent);
+      animation: shrink 2.2s ease-in-out infinite;
+    }
+
+    /* ── METRICS ───────────────────────────────────────── */
+    .metrics {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .metric {
+      padding: clamp(2rem,4vw,3.5rem) clamp(1.5rem,3vw,2.5rem);
+      border-right: 1px solid var(--border); text-align: center;
+    }
+    .metric:last-child { border-right: none; }
+    .metric__num {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.8rem,5vw,5.5rem); font-weight: 700; line-height: 1; display: block;
+    }
+    .metric__num .accent { color: var(--fire); }
+    .metric__label {
+      display: block; margin-top: .4rem;
+      font-size: .66rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ── STATEMENT ─────────────────────────────────────── */
+    .statement {
+      padding: clamp(5rem,10vw,10rem) clamp(1.5rem,5vw,4.5rem);
+      border-bottom: 1px solid var(--border);
+    }
+    .statement__text {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.8rem,7vw,8.5rem); font-weight: 700;
+      text-transform: uppercase; line-height: .92; letter-spacing: -.02em;
+    }
+    .statement__text .fire { color: var(--fire); }
+    .statement__text .dim { color: rgba(255,255,255,.18); }
+    .statement__sub {
+      display: flex; gap: 1rem;
+      margin-top: clamp(2rem,4vw,3.5rem); max-width: 500px;
+      border-left: 2px solid var(--fire); padding-left: 1.25rem;
+    }
+    .statement__sub p {
+      font-size: clamp(.92rem,1.3vw,1rem); color: var(--muted);
+      line-height: 1.8; font-weight: 300;
+    }
+
+    /* ── SHARED ────────────────────────────────────────── */
+    .section { padding: clamp(5rem,10vw,9rem) clamp(1.5rem,5vw,4.5rem); }
+    .s-label {
+      display: flex; align-items: center; gap: .6rem;
+      font-size: .64rem; letter-spacing: .26em; text-transform: uppercase;
+      color: var(--fire); font-weight: 500; margin-bottom: 1.2rem;
+    }
+    .s-label::before { content: ''; width: 20px; height: 1.5px; background: var(--fire); }
+    .s-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.2rem,5vw,5.5rem); font-weight: 700;
+      text-transform: uppercase; line-height: .93; letter-spacing: -.01em;
+    }
+    .s-body {
+      margin-top: 1.5rem; font-size: clamp(.9rem,1.3vw,1.02rem);
+      color: var(--muted); line-height: 1.85; font-weight: 300; max-width: 500px;
+    }
+
+    /* ── REVEAL ────────────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .7s var(--ease), transform .7s var(--ease);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: .1s; }
+    .d2 { transition-delay: .2s; }
+    .d3 { transition-delay: .3s; }
+    .d4 { transition-delay: .45s; }
+
+    /* ── BENTO ─────────────────────────────────────────── */
+    .bento {
+      display: grid; grid-template-columns: repeat(12,1fr);
+      gap: clamp(.6rem,1vw,.875rem); margin-top: clamp(3rem,6vw,5rem);
+    }
+    .b-card {
+      position: relative; overflow: hidden;
+      border: 1px solid var(--border); background: var(--deep);
+      padding: clamp(1.75rem,3vw,2.5rem);
+      transition: border-color .35s var(--ease), transform .35s var(--ease);
+    }
+    .b-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,61,0,.07) 0%, transparent 55%);
+      opacity: 0; transition: opacity .4s;
+    }
+    .b-card:hover { border-color: rgba(255,61,0,.3); transform: translateY(-3px); }
+    .b-card:hover::before { opacity: 1; }
+    .b-card:hover .b-num { color: rgba(255,61,0,.08); }
+    .b-card:hover .chip { border-color: rgba(255,61,0,.38); color: var(--white); }
+
+    .b-card--1 { grid-column: span 7; }
+    .b-card--2 { grid-column: span 5; }
+    .b-card--3 { grid-column: span 4; }
+    .b-card--4 { grid-column: span 4; }
+    .b-card--5 { grid-column: span 4; background: var(--card); display: flex; flex-direction: column; justify-content: flex-end; }
+
+    .b-num {
+      position: absolute; top: 0; right: 1rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(5rem,10vw,10rem); font-weight: 700; line-height: .85;
+      color: rgba(255,255,255,.03); letter-spacing: -.04em; user-select: none;
+      transition: color .35s;
+    }
+    .b-tag { position: relative; z-index: 1; font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--fire); font-weight: 500; margin-bottom: .85rem; }
+    .b-title { position: relative; z-index: 1; font-family: 'Oswald', sans-serif; font-size: clamp(1.3rem,2.5vw,2.1rem); font-weight: 600; text-transform: uppercase; letter-spacing: .02em; margin-bottom: .7rem; }
+    .b-desc { position: relative; z-index: 1; font-size: .875rem; color: var(--muted); line-height: 1.75; font-weight: 300; max-width: 380px; margin-bottom: 1.6rem; }
+    .chips { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: .4rem; }
+    .chip { font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; padding: .3rem .75rem; border: 1px solid rgba(255,255,255,.1); color: var(--muted); transition: all .25s; }
+    .chip--hot { background: rgba(255,61,0,.08); border-color: rgba(255,61,0,.28); color: var(--fire); }
+    .b-stat-big { font-family: 'Oswald', sans-serif; font-size: clamp(4rem,8vw,8rem); font-weight: 700; line-height: .85; color: rgba(255,61,0,.1); margin-bottom: .75rem; }
+
+    /* ── TICKER ────────────────────────────────────────── */
+    .ticker-wrap {
+      overflow: hidden;
+      padding: clamp(2rem,4vw,3.5rem) 0;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      background: var(--deep);
+    }
+    .ticker-inner { display: flex; width: max-content; animation: marquee 24s linear infinite; }
+    .ticker-inner:hover { animation-play-state: paused; }
+    .ticker-item {
+      font-family: 'Oswald', sans-serif; font-size: clamp(.95rem,1.8vw,1.4rem);
+      font-weight: 500; text-transform: uppercase; letter-spacing: .08em;
+      color: rgba(255,255,255,.16); white-space: nowrap;
+      padding: 0 clamp(2rem,4vw,3.5rem); transition: color .3s;
+    }
+    .ticker-item:hover { color: var(--white); }
+    .ticker-dot { color: var(--fire); opacity: .4; }
+
+    /* ── TECHNOLOGY ────────────────────────────────────── */
+    .tech-section { background: var(--deep); }
+    .tech-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem,6vw,7.5rem); align-items: center;
+      margin-top: clamp(3rem,6vw,5rem);
+    }
+    .tech-list { display: flex; flex-direction: column; }
+    .tech-item {
+      display: grid; grid-template-columns: 44px 1fr; gap: 1.25rem;
+      padding: clamp(1.25rem,2.5vw,2rem) 0;
+      border-bottom: 1px solid var(--border); align-items: start;
+      transition: .3s var(--ease);
+    }
+    .tech-item:first-child { border-top: 1px solid var(--border); }
+    .tech-item:hover .t-icon { background: var(--fire); border-color: var(--fire); }
+    .tech-item:hover .t-icon svg { fill: var(--white); }
+    .t-icon {
+      width: 36px; height: 36px; margin-top: 2px;
+      border: 1px solid rgba(255,61,0,.4); display: grid; place-items: center;
+      transition: .3s var(--ease);
+    }
+    .t-icon svg { width: 14px; height: 14px; fill: var(--fire); transition: fill .3s; }
+    .t-name { font-family: 'Oswald', sans-serif; font-size: clamp(.9rem,1.4vw,1.1rem); font-weight: 500; text-transform: uppercase; letter-spacing: .05em; margin-bottom: .35rem; }
+    .t-desc { font-size: .84rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+    .tech-vis {
+      aspect-ratio: 4/5; border: 1px solid var(--border);
+      background: var(--ink); position: relative; overflow: hidden;
+      display: grid; place-items: center;
+    }
+    .tech-vis-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,61,0,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,61,0,.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .tech-ring {
+      position: absolute; border-radius: 50%; border: 1px solid rgba(255,61,0,.1);
+      animation: pulse-ring 4s ease-in-out infinite;
+    }
+    .tech-ring:nth-child(2) { width: 160px; height: 160px; }
+    .tech-ring:nth-child(3) { width: 270px; height: 270px; border-color: rgba(255,61,0,.06); animation-delay: .9s; }
+    .tech-ring:nth-child(4) { width: 380px; height: 380px; border-color: rgba(255,61,0,.03); animation-delay: 1.8s; }
+    .tech-vis-center { position: relative; z-index: 2; text-align: center; }
+    .tech-vis-label { font-size: .6rem; letter-spacing: .28em; text-transform: uppercase; color: var(--fire); margin-bottom: .5rem; }
+    .tech-vis-value { font-family: 'Oswald', sans-serif; font-size: clamp(3.5rem,6vw,6.5rem); font-weight: 700; line-height: 1; }
+    .tech-vis-unit { font-size: .76rem; color: var(--muted); margin-top: .4rem; letter-spacing: .1em; }
+
+    /* ── PROCESS ───────────────────────────────────────── */
+    .process-steps {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      border: 1px solid var(--border); margin-top: clamp(3rem,6vw,5rem);
+    }
+    .p-step {
+      padding: clamp(1.75rem,3vw,2.75rem); border-right: 1px solid var(--border);
+      position: relative; overflow: hidden; transition: background .35s;
+    }
+    .p-step:last-child { border-right: none; }
+    .p-step:hover { background: var(--deep); }
+    .p-step:hover .p-num { color: rgba(255,61,0,.12); }
+    .p-num { font-family: 'Oswald', sans-serif; font-size: clamp(3.5rem,6vw,6rem); font-weight: 700; line-height: .85; color: rgba(255,255,255,.04); margin-bottom: 1.25rem; transition: color .35s; }
+    .p-step-tag { font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--fire); margin-bottom: .6rem; }
+    .p-step-name { font-family: 'Oswald', sans-serif; font-size: clamp(1.1rem,1.8vw,1.5rem); font-weight: 600; text-transform: uppercase; letter-spacing: .03em; margin-bottom: .6rem; }
+    .p-step-desc { font-size: .84rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+    /* ── ORIGIN ────────────────────────────────────────── */
+    .origin-layout {
+      display: grid; grid-template-columns: 1fr 2fr;
+      gap: clamp(3rem,7vw,9rem); align-items: start;
+    }
+    .origin-aside { position: sticky; top: 7rem; }
+    .origin-year { font-family: 'Oswald', sans-serif; font-size: clamp(7rem,14vw,14rem); font-weight: 700; line-height: .82; color: rgba(255,255,255,.03); margin-bottom: 2rem; }
+    .origin-badge { display: inline-block; border: 1px solid var(--fire); padding: .4rem .9rem; font-size: .64rem; letter-spacing: .2em; text-transform: uppercase; color: var(--fire); }
+    .origin-lead { font-family: 'Oswald', sans-serif; font-size: clamp(1.8rem,3.5vw,3.2rem); font-weight: 500; text-transform: uppercase; line-height: 1.05; letter-spacing: -.01em; margin-bottom: 2.5rem; }
+    .origin-lead em { font-style: normal; color: var(--fire); }
+    .origin-body { font-size: clamp(.92rem,1.3vw,1.05rem); color: var(--muted); line-height: 1.9; font-weight: 300; }
+    .origin-body p + p { margin-top: 1.6rem; }
+    .origin-pull { margin: 2.5rem 0; padding-left: 1.5rem; border-left: 2px solid var(--fire); }
+    .origin-pull blockquote { font-family: 'Oswald', sans-serif; font-size: clamp(1.1rem,2vw,1.5rem); font-weight: 400; text-transform: uppercase; letter-spacing: .02em; line-height: 1.45; color: var(--white); }
+
+    /* ── CTA BLOCK ─────────────────────────────────────── */
+    .cta-block {
+      background: var(--fire);
+      padding: clamp(5rem,10vw,9rem) clamp(1.5rem,5vw,4.5rem);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 3rem;
+    }
+    .cta-text { font-family: 'Oswald', sans-serif; font-size: clamp(2.5rem,5vw,5.5rem); font-weight: 700; text-transform: uppercase; line-height: .92; letter-spacing: -.02em; color: var(--white); }
+    .cta-text span { color: rgba(255,255,255,.35); }
+
+    /* ── FOOTER ────────────────────────────────────────── */
+    footer {
+      padding: clamp(4rem,7vw,6.5rem) clamp(1.5rem,5vw,4.5rem) clamp(2.5rem,4vw,3.5rem);
+      border-top: 1px solid var(--border);
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: clamp(2rem,4vw,5rem);
+      padding-bottom: clamp(3rem,5vw,4.5rem);
+      border-bottom: 1px solid var(--border); margin-bottom: clamp(2rem,3vw,3rem);
+    }
+    .f-brand { font-family: 'Oswald', sans-serif; font-size: clamp(1.4rem,2.5vw,2.25rem); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 1rem; }
+    .f-brand em { font-style: normal; color: var(--fire); }
+    .f-desc { font-size: .86rem; color: var(--muted); line-height: 1.75; font-weight: 300; max-width: 280px; }
+    .f-col-h { font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.4rem; }
+    .f-list { list-style: none; display: flex; flex-direction: column; gap: .7rem; }
+    .f-list a { font-size: .86rem; color: rgba(255,255,255,.45); text-decoration: none; transition: color .25s; }
+    .f-list a:hover { color: var(--white); }
+    .footer-bot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .f-copy { font-size: .7rem; color: rgba(255,255,255,.18); letter-spacing: .05em; }
+    .f-origin { font-size: .7rem; color: rgba(255,255,255,.15); letter-spacing: .08em; }
+    .f-origin em { font-style: normal; color: var(--fire); }
+
+    /* ── KEYFRAMES ─────────────────────────────────────── */
+    @keyframes up      { to { opacity: 1; transform: none; } }
+    @keyframes fadeIn  { to { opacity: 1; } }
+    @keyframes shrink  { 0%,100% { transform: scaleY(1); opacity: 1; } 50% { transform: scaleY(.4); opacity: .2; } }
+    @keyframes pulse-ring { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: .4; } }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .b-card--1 { grid-column: span 12; }
+      .b-card--2 { grid-column: span 12; }
+      .b-card--3,.b-card--4,.b-card--5 { grid-column: span 4; }
+    }
+    @media (max-width: 900px) {
+      .nav__links,.nav__cta { display: none; }
+      .metrics { grid-template-columns: repeat(2,1fr); }
+      .metric:nth-child(2) { border-right: none; }
+      .metric:nth-child(3) { border-top: 1px solid var(--border); }
+      .metric:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+      .b-card--3,.b-card--4,.b-card--5 { grid-column: span 12; }
+      .tech-layout { grid-template-columns: 1fr; }
+      .tech-vis { aspect-ratio: 3/2; order: -1; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .p-step:nth-child(2) { border-right: none; }
+      .p-step:nth-child(3) { border-top: 1px solid var(--border); }
+      .p-step:last-child  { border-top: 1px solid var(--border); }
+      .origin-layout { grid-template-columns: 1fr; }
+      .origin-aside { position: static; }
+      .footer-top { grid-template-columns: 1fr; }
+      .cta-block { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 600px) {
+      .process-steps { grid-template-columns: 1fr; }
+      .p-step { border-right: none; border-top: 1px solid var(--border); }
+      .p-step:first-child { border-top: none; }
+      .hero__h1 { font-size: clamp(3rem,14vw,5.5rem); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════════════ -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav__logo">ATTLE<em>.</em></a>
+  <ul class="nav__links">
+    <li><a href="#legado">Legado</a></li>
+    <li><a href="#tecnologia">Tecnología</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#historia">Historia</a></li>
+  </ul>
+  <a href="#contacto" class="nav__cta">Contactar</a>
+</nav>
+
+<!-- ══ HERO ═════════════════════════════════════════════ -->
+<section class="hero" aria-labelledby="hero-h">
+  <div class="hero__bg" id="hero-bg" aria-hidden="true"></div>
+  <div>
+    <div class="hero__eyebrow">
+      <div class="hero__eyebrow-dash"></div>
+      <span class="hero__eyebrow-text">Fontibón, Bogotá &mdash; Colombia</span>
+    </div>
+    <h1 class="hero__h1" id="hero-h">
+      De Fontibón<br>
+      a la <span class="fire">élite</span><br>
+      del FPC.
+    </h1>
+    <div class="hero__foot">
+      <p class="hero__desc">
+        Indumentaria deportiva de alto rendimiento, fabricada en Colombia.
+        Vestida por los equipos que escriben la historia del fútbol profesional.
+      </p>
+      <div class="hero__actions">
+        <a href="#legado" class="btn btn--primary">
+          Ver nuestro legado
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+            <path d="M2 7.5h11M9 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a href="#historia" class="btn btn--ghost">Nuestra historia</a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="scroll-hint-line"></div>
+  </div>
+</section>
+
+<!-- ══ METRICS ══════════════════════════════════════════ -->
+<div class="metrics" role="region" aria-label="Cifras clave">
+  <div class="metric reveal">
+    <span class="metric__num" data-target="20">0<span class="accent">+</span></span>
+    <span class="metric__label">Años de trayectoria</span>
+  </div>
+  <div class="metric reveal d1">
+    <span class="metric__num" data-target="8">0<span class="accent">+</span></span>
+    <span class="metric__label">Equipos profesionales</span>
+  </div>
+  <div class="metric reveal d2">
+    <span class="metric__num" data-target="3">0</span>
+    <span class="metric__label">Países de competencia</span>
+  </div>
+  <div class="metric reveal d3">
+    <span class="metric__num" style="font-size:clamp(2rem,3.5vw,3.5rem);letter-spacing:-.01em">FPC</span>
+    <span class="metric__label">Liga colombiana</span>
+  </div>
+</div>
+
+<!-- ══ STATEMENT ════════════════════════════════════════ -->
+<div class="statement reveal">
+  <p class="statement__text">
+    <span class="dim">No fabricamos</span><br>
+    uniformes.<br>
+    Fabricamos<br>
+    <span class="fire">identidad.</span>
+  </p>
+  <div class="statement__sub reveal d2">
+    <p>
+      Desde Fontibón, Colombia, demostramos que una fábrica local puede competir —
+      y ganar — contra las multinacionales más grandes del deporte.
+      La clave: innovación técnica sin comprometer la identidad de cada club.
+    </p>
+  </div>
+</div>
+
+<!-- ══ BENTO GRID ════════════════════════════════════════ -->
+<section class="section" id="legado" aria-labelledby="legado-title">
+  <div class="reveal">
+    <p class="s-label">Nuestro legado</p>
+    <h2 class="s-title" id="legado-title">Donde<br>compiten<br>los mejores.</h2>
+    <p class="s-body">
+      Del FPC a las canchas de fuerzas básicas. Cada camiseta es una declaración
+      de identidad y rendimiento extremo.
+    </p>
+  </div>
+
+  <div class="bento">
+    <article class="b-card b-card--1 reveal">
+      <span class="b-num" aria-hidden="true">01</span>
+      <p class="b-tag">Primera división</p>
+      <h3 class="b-title">Fútbol Profesional</h3>
+      <p class="b-desc">
+        Uniformes que resisten la intensidad de la élite. Tres equipos en tres países
+        confían en nuestra tecnología para cada partido que define temporadas.
+      </p>
+      <div class="chips">
+        <span class="chip chip--hot">Equidad F.C.</span>
+        <span class="chip chip--hot">Atlético Huila</span>
+        <span class="chip chip--hot">Caracas F.C.</span>
+        <span class="chip">FPC Colombia</span>
+        <span class="chip">Venezuela</span>
+      </div>
+    </article>
+
+    <article class="b-card b-card--2 reveal d1">
+      <span class="b-num" aria-hidden="true">02</span>
+      <p class="b-tag">Formación de élite</p>
+      <h3 class="b-title">Fuerzas Básicas</h3>
+      <p class="b-desc">
+        Vestimos a la próxima generación. Las selecciones que forjan
+        a los cracks del mañana llevan nuestra firma.
+      </p>
+      <div class="chips">
+        <span class="chip chip--hot">Sel. Bogotá</span>
+        <span class="chip chip--hot">Sel. Antioquia</span>
+        <span class="chip">Sub-17</span>
+        <span class="chip">Sub-20</span>
+      </div>
+    </article>
+
+    <article class="b-card b-card--3 reveal d2">
+      <span class="b-num" aria-hidden="true">03</span>
+      <p class="b-tag">Nuevas fronteras</p>
+      <h3 class="b-title">Innovación Digital</h3>
+      <p class="b-desc">Donde el deporte se encuentra con la cultura digital.</p>
+      <div class="chips">
+        <span class="chip chip--hot">Liga de Creadores</span>
+        <span class="chip chip--hot">Futsal Élite</span>
+      </div>
+    </article>
+
+    <article class="b-card b-card--4 reveal d2">
+      <span class="b-num" aria-hidden="true">04</span>
+      <p class="b-tag">Corporativo</p>
+      <h3 class="b-title">Dotación Empresarial</h3>
+      <p class="b-desc">Imagen de marca que viste a equipos de trabajo con la misma calidad que los atletas.</p>
+      <div class="chips">
+        <span class="chip">Uniformes</span>
+        <span class="chip">Dotación</span>
+        <span class="chip">Corporativo</span>
+      </div>
+    </article>
+
+    <article class="b-card b-card--5 reveal d3">
+      <div class="b-stat-big">100%</div>
+      <p class="b-tag">Fabricación nacional</p>
+      <h3 class="b-title" style="font-size:clamp(1.1rem,2vw,1.6rem)">
+        Hecho en<br>Colombia.<br>Para el mundo.
+      </h3>
+    </article>
+  </div>
+</section>
+
+<!-- ══ TICKER ════════════════════════════════════════════ -->
+<div class="ticker-wrap" role="region" aria-label="Nuestros equipos">
+  <div style="overflow:hidden">
+    <div class="ticker-inner" aria-hidden="true">
+      <span class="ticker-item">Equidad F.C.</span>
+      <span class="ticker-item ticker-dot">◆</span>
+      <span class="ticker-item">Atlético Huila</span>
+      <span class="ticker-item ticker-dot">◆</span>
+      <span class="ticker-item">Caracas F.C.</span>
+      <span class="ticker-item ticker-dot">◆</span>
+      <span class="ticker-item">Selección Bogotá</span>
+      <span class="ticker-item ticker-dot">◆</span>
+      <span class="ticker-item">Selección Antioquia</span>
+      <span class="ticker-item ticker-dot">◆</span>
+      <span class="ticker-item">Liga de Creadores</span>
+      <span class="ticker-item ticker-dot">◆</span>
+      <span class="ticker-item">Futsal de Élite</span>
+      <span class="ticker-item ticker-dot">◆</span>
+      <span class="ticker-item">Equidad F.C.</span>
+      <span class="ticker-item ticker-dot">◆</span>
+      <span class="ticker-item">Atlético Huila</span>
+      <span class="ticker-item ticker-dot">◆</span>
+      <span class="ticker-item">Caracas F.C.</span>
+      <span class="ticker-item ticker-dot">◆</span>
+      <span class="ticker-item">Selección Bogotá</span>
+      <span class="ticker-item ticker-dot">◆</span>
+      <span class="ticker-item">Selección Antioquia</span>
+      <span class="ticker-item ticker-dot">◆</span>
+      <span class="ticker-item">Liga de Creadores</span>
+      <span class="ticker-item ticker-dot">◆</span>
+      <span class="ticker-item">Futsal de Élite</span>
+      <span class="ticker-item ticker-dot">◆</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TECHNOLOGY ════════════════════════════════════════ -->
+<section class="section tech-section" id="tecnologia" aria-labelledby="tech-title">
+  <div class="reveal">
+    <p class="s-label">Innovación técnica</p>
+    <h2 class="s-title" id="tech-title">Telas que<br>rinden igual<br>que el atleta.</h2>
+  </div>
+  <div class="tech-layout">
+    <div class="tech-list">
+      <div class="tech-item reveal">
+        <div class="t-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 0 1 5 5c0 3.5-5 11-5 11S7 10.5 7 7a5 5 0 0 1 5-5zm0 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg>
+        </div>
+        <div>
+          <p class="t-name">Sublimación por transferencia de calor</p>
+          <p class="t-desc">Proceso a 180 °C que fija el color en la fibra. Sin desteñir ni descascarar, sin importar la intensidad del partido.</p>
+        </div>
+      </div>
+      <div class="tech-item reveal d1">
+        <div class="t-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21c1.78-1.5 4.18-2 6.18-1 2.5 1.5 4 1.5 6.5 0 2-1.3 3.5-1.5 5.5 0-.5-2.5-1-5-5-12z"/></svg>
+        </div>
+        <div>
+          <p class="t-name">Microfibra técnica de alto rendimiento</p>
+          <p class="t-desc">Tejido con gestión activa de humedad. Más liviano, más seco, más cómodo durante los 90 minutos.</p>
+        </div>
+      </div>
+      <div class="tech-item reveal d2">
+        <div class="t-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 3L3 10.5l7.5 3 3 7.5L21 3zm-11 9l9-9"/></svg>
+        </div>
+        <div>
+          <p class="t-name">Corte ergonómico estructurado</p>
+          <p class="t-desc">Patrones con retroalimentación de atletas profesionales. Elasticidad donde el cuerpo lo necesita.</p>
+        </div>
+      </div>
+      <div class="tech-item reveal d3">
+        <div class="t-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L3 7v5c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V7L12 2zm-1 13l-3-3 1.4-1.4 1.6 1.6 4.6-4.6L17 9l-6 6z"/></svg>
+        </div>
+        <div>
+          <p class="t-name">Control de calidad por lote</p>
+          <p class="t-desc">Cada producción pasa por inspección antes de salir de Fontibón. Calidad certificada, uniforme tras uniforme.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tech-vis reveal d2" aria-hidden="true">
+      <div class="tech-vis-grid"></div>
+      <div class="tech-ring"></div>
+      <div class="tech-ring"></div>
+      <div class="tech-ring"></div>
+      <div class="tech-vis-center">
+        <p class="tech-vis-label">Temperatura de fusión</p>
+        <div class="tech-vis-value">180°C</div>
+        <p class="tech-vis-unit">Transferencia de calor sublimada</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PROCESS ═══════════════════════════════════════════ -->
+<section class="section" id="proceso" aria-labelledby="proceso-title">
+  <div class="reveal">
+    <p class="s-label">Cómo trabajamos</p>
+    <h2 class="s-title" id="proceso-title">Del diseño<br>a la cancha.</h2>
+  </div>
+  <div class="process-steps reveal d1">
+    <div class="p-step">
+      <div class="p-num">01</div>
+      <p class="p-step-tag">Origen</p>
+      <p class="p-step-name">Fontibón, Bogotá</p>
+      <p class="p-step-desc">Todo empieza en nuestra planta. Más de 20 años fabricando con orgullo desde el corazón industrial de la ciudad.</p>
+    </div>
+    <div class="p-step">
+      <div class="p-num">02</div>
+      <p class="p-step-tag">Diseño</p>
+      <p class="p-step-name">Identidad Personalizada</p>
+      <p class="p-step-desc">Cada club tiene su ADN. Trabajamos el diseño directamente con los equipos para que cada prenda cuente su historia.</p>
+    </div>
+    <div class="p-step">
+      <div class="p-num">03</div>
+      <p class="p-step-tag">Producción</p>
+      <p class="p-step-name">Técnica de Élite</p>
+      <p class="p-step-desc">Sublimación a 180 °C, microfibra técnica y control de calidad por lote. Los mismos estándares para todos los equipos.</p>
+    </div>
+    <div class="p-step">
+      <div class="p-num">04</div>
+      <p class="p-step-tag">Entrega</p>
+      <p class="p-step-name">Listos para Competir</p>
+      <p class="p-step-desc">Cada uniforme sale de Fontibón listo para el partido más importante. En el deporte, los detalles marcan la diferencia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ ORIGIN ════════════════════════════════════════════ -->
+<section class="section" id="historia" aria-labelledby="origin-title">
+  <div class="origin-layout">
+    <aside class="origin-aside reveal">
+      <div class="origin-year">2004</div>
+      <span class="origin-badge">Fontibón, Bogotá</span>
+    </aside>
+    <div>
+      <h2 class="origin-lead reveal" id="origin-title">
+        Una fábrica en Fontibón <em>desafió</em> a las multinacionales del deporte.
+      </h2>
+      <div class="origin-body reveal d1">
+        <p>
+          Todo comenzó con una máquina de sublimación y la convicción de que Colombia
+          podía fabricar indumentaria deportiva de talla mundial. Attle Deportes SAS
+          nació en el corazón industrial de Fontibón cuando el mercado colombiano
+          era dominado exclusivamente por marcas extranjeras.
+        </p>
+        <div class="origin-pull">
+          <blockquote>
+            "Si ellos pueden vestir a los mejores equipos del mundo,
+            nosotros podemos vestir a los mejores equipos de Colombia."
+          </blockquote>
+        </div>
+        <p>
+          La estrategia fue clara desde el primer día: no competir por precio, sino por
+          calidad e identidad. Mientras las multinacionales ofrecían catálogos genéricos,
+          Attle apostó por el diseño personalizado y la relación directa con los clubes.
+          Esa cercanía se convirtió en nuestro mayor activo competitivo.
+        </p>
+        <p>
+          La adopción de sublimación de alta temperatura fue el salto que cambió todo.
+          Los uniformes de Attle comenzaron a aparecer en los estadios del FPC.
+          Primero Equidad, luego Huila, después el fútbol profesional completo notó
+          que había una marca local que no cedía ante los gigantes globales.
+        </p>
+        <p>
+          Hoy, con más de dos décadas de trayectoria, Attle Deportes viste a equipos
+          en tres países y es referente de manufactura deportiva en América Latina.
+          El origen nunca cambió: seguimos siendo Fontibón, seguimos siendo Colombia.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA BLOCK ═════════════════════════════════════════ -->
+<div class="cta-block" id="contacto">
+  <div class="cta-text">
+    <span>¿Listo para</span><br>
+    vestir al<br>
+    mejor equipo?
+  </div>
+  <a href="mailto:info@attle.com.co" class="btn btn--dark">
+    Hablar con un asesor
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+      <path d="M2 7.5h11M9 3.5l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </a>
+</div>
+
+<!-- ══ FOOTER ════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <p class="f-brand">ATTLE<em>.</em></p>
+      <p class="f-desc">
+        Indumentaria deportiva de alto rendimiento. Fabricada en Fontibón, Bogotá.
+        Reconocida en los estadios más importantes de Colombia y el continente.
+      </p>
+    </div>
+    <div>
+      <p class="f-col-h">Segmentos</p>
+      <ul class="f-list">
+        <li><a href="#">Fútbol Profesional</a></li>
+        <li><a href="#">Fuerzas Básicas</a></li>
+        <li><a href="#">Dotación Empresarial</a></li>
+        <li><a href="#">Liga de Creadores</a></li>
+        <li><a href="#">Ciclismo</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="f-col-h">Contacto</p>
+      <ul class="f-list">
+        <li><a href="mailto:info@attle.com.co">info@attle.com.co</a></li>
+        <li><a href="#">WhatsApp Comercial</a></li>
+        <li><a href="#">Bogotá, Colombia</a></li>
+        <li><a href="#">Fontibón</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bot">
+    <p class="f-copy">&copy; 2024 Attle Deportes SAS. Todos los derechos reservados.</p>
+    <p class="f-origin">Hecho en <em>Fontibón</em>, para el mundo.</p>
+  </div>
+</footer>
+
+<script>
+  // Nav
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('nav--scrolled', window.scrollY > 50);
+  }, { passive: true });
+
+  // Scroll reveal
+  const revIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revIO.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revIO.observe(el));
+
+  // Counter animation
+  const cntIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseInt(el.dataset.target, 10);
+      if (!target) return;
+      cntIO.unobserve(el);
+      const accent = el.querySelector('.accent');
+      const dur = 1800, t0 = performance.now();
+      (function tick(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        const v = Math.round((1 - Math.pow(1 - p, 3)) * target);
+        el.childNodes[0].textContent = v;
+        if (accent) el.appendChild(accent);
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+    });
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.metric__num[data-target]').forEach(el => cntIO.observe(el));
+
+  // Smooth anchors
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  // Hero cursor glow
+  const heroBg = document.getElementById('hero-bg');
+  document.querySelector('.hero').addEventListener('mousemove', ({ currentTarget: h, clientX, clientY }) => {
+    const r = h.getBoundingClientRect();
+    const x = ((clientX - r.left) / r.width * 100).toFixed(1);
+    const y = ((clientY - r.top) / r.height * 100).toFixed(1);
+    heroBg.style.background = `
+      radial-gradient(ellipse 55% 60% at ${x}% ${y}%, rgba(255,61,0,.065) 0%, transparent 68%),
+      radial-gradient(ellipse 35% 40% at 15% 78%, rgba(255,61,0,.025) 0%, transparent 60%)`;
+  });
+</script>
+</body>
+</html>
