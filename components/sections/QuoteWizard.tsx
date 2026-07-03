@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import FadeUp from '@/components/animations/FadeUp'
 
 /* ─── Types ──────────────────────────────────────────────────────── */
-type Sport = 'Fútbol' | 'Ciclismo' | 'Dotación'
+type Sport = 'Fútbol' | 'Dotación'
 type WizardStep = 0 | 1 | 2 | 3
 type ContactKey = 'teamName' | 'whatsapp' | 'email'
 
@@ -81,9 +81,8 @@ function JerseyIcon({ color }: { color: string }) {
 
 /* ─── Sport options ──────────────────────────────────────────────── */
 const SPORTS = [
-  { id: 'Fútbol'   as Sport, sub: 'Cancha 11 / Fútbol Sala',    accent: '#CC0000', Icon: FootballIcon },
-  { id: 'Ciclismo' as Sport, sub: 'Ruta / MTB / Pista',          accent: '#4DFFB4', Icon: CyclingIcon  },
-  { id: 'Dotación' as Sport, sub: 'Empresarial / Institucional',  accent: '#FFD000', Icon: JerseyIcon   },
+  { id: 'Fútbol'   as Sport, sub: 'Cancha 11 / Fútbol Sala',   accent: '#CC0000', Icon: FootballIcon },
+  { id: 'Dotación' as Sport, sub: 'Empresarial / Institucional', accent: '#FFD000', Icon: JerseyIcon   },
 ]
 
 /* ─── Step 1: Sport selection ────────────────────────────────────── */
